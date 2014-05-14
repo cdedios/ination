@@ -21,8 +21,42 @@ public class Itinerary {
 
     protected Itinerary() {}
 
-    public Itinerary(User owner, String description) {
-        this.term = term;
-        this.description = description;
+    public Itinerary(User owner, int start, int end, boolean enabled) {
+        this.owner = owner;
+        this.start = start;
+        this.end = end;
+        this.enabled = enabled;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public int getStart() {
+        return start;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
+    }
+
+    public int getEnd() {
+        return end;
+    }
+
+    public void setEnd(int end) {
+        this.end = end;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }
