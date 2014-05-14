@@ -12,6 +12,7 @@ import java.
 /**
  * Created by carlos on 5/8/14.
  */
+
 @Entity
 public class Alert {
     @Id
