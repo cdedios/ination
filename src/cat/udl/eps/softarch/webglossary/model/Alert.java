@@ -1,11 +1,14 @@
 package cat.udl.eps.softarch.webglossary.model;
 
+import cat.udl.eps.softarch.webglossary.persistence.EMF;
 import com.google.appengine.api.datastore.Key;
 
+import javax.management.Query;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.ArrayList;
 import java.util.Date;
 //import java.
 
@@ -32,7 +35,8 @@ public class Alert{
     private String region;
 
     public Alert(){ };
-    public Alert(String type, int start, int end, String direction, String towards, String place, String region) {
+    public Alert(int id, String type, int start, int end, String direction, String towards, String place, String region) {
+        this.id = id;
         this.type = type;
         this.start = start;
         this.end = end;
@@ -50,6 +54,12 @@ public class Alert{
         return true;
     }
 
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public Date getDate() {
         return date;
     }
@@ -97,6 +107,18 @@ public class Alert{
     }
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public static ArrayList<Alert> getList() {
+        ArrayList<Alert> alerts = new ArrayList<Alert>();
+        EntityManager em = EMF.get().createEntityManager();
+        try {
+            Query q = em.createQuery("SELECT * FROM Alert");
+            terms = new ArrayList<Alert>(q.getResultList());
+        } finally {
+            em.close();
+        }
+        return terms;
     }
 
 
