@@ -7,19 +7,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
-import java.
+//import java.
 
 /**
  * Created by carlos on 5/8/14.
- */
+ **/
 
 @Entity
-public class Alert {
+public class Alert{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Key key;
 
     //private Time time;
+
+    private int id;
     private Date date;
     private String type;
     private int start;
@@ -29,10 +31,15 @@ public class Alert {
     private String place;
     private String region;
 
-    protected Alert() {}
-
-    public Alert(String term, String description) {
-
+    public Alert(){ };
+    public Alert(String type, int start, int end, String direction, String towards, String place, String region) {
+        this.type = type;
+        this.start = start;
+        this.end = end;
+        this.direction = direction;
+        this.towards = towards;
+        this.place = place;
+        this.region = region;
     }
 
     public void send(){
@@ -40,7 +47,7 @@ public class Alert {
     }
 
     public boolean isValid(){
-
+        return true;
     }
 
     public Date getDate() {
