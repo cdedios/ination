@@ -30,9 +30,7 @@ import javax.xml.xquery.XQResultSequence;
 
 public class XQueryHelper {
     private static final Logger log = Logger.getLogger(XQueryHelper.class.getName());
-    private static final String namespaces =
-            "declare namespace mmd=\"http://musicbrainz.org/ns/mmd-2.0#\";";
-
+    private static final String namespaces = "cite=\"http://www.opengeospatial.net/cite\";";
     private Properties serializationProps;
     private XQPreparedExpression expr;
     private XQConnection conn;
@@ -50,6 +48,8 @@ public class XQueryHelper {
                     "    {min(($years,$years-from-date))} " +
                     " </recording>";
 
+    final URL inputURL = new URL("http://gencat.cat/transit/opendata/incidenciesGML.xml");
+
     static final String songsXQ =
             " declare namespace cite=\"http://www.opengeospatial.net/cite\"; "+
                 "declare variable $doc := doc(\"http://www.gencat.cat/transit/opendata/incidenciesGML.xml\");"+
@@ -57,7 +57,7 @@ public class XQueryHelper {
                 " return <alert>" +
                     "{$r//cite:identificador}," +
                     "{$r//cite:tipus}," +
-                    "{$r//cite:sentit},+" +
+                    "{$r//cite:sentit}," +
                     "{$r//cite:cap_a}," +
                     "{$r//cite:pk_inici}," +
                     "{$r//cite:pk_fi}," +
@@ -75,6 +75,17 @@ public class XQueryHelper {
         this.expr.bindDocument(new javax.xml.namespace.QName("doc"), urlconn.getInputStream(), null, null);
     }
 
+    XQueryHelper()
+            throws ClassNotFoundException, InstantiationException, IllegalAccessException, XQException, IOException {
+        URLConnection urlconn = inputURL.openConnection();
+        urlconn.setReadTimeout(50000);
+
+        XQDataSource xqds = (XQDataSource)Class.forName("net.sf.saxon.xqj.SaxonXQDataSource").newInstance();
+        this.conn = xqds.getConnection();
+        this.expr = conn.prepareExpression(songsXQ);
+        //this.expr.bindDocument(new javax.xml.namespace.QName("doc"), urlconn.getInputStream(), null, null);
+    }
+
     ArrayList<Alert> getAlerts() throws XQException {
         ArrayList<Alert> alerts = new ArrayList();
         XQResultSequence rs = this.expr.executeQuery();
@@ -82,26 +93,34 @@ public class XQueryHelper {
         while (rs.next()) {
             XQItem item = rs.getItem();
             String s = item.getItemAsString(null);
-            s = s.substring("<recording>".length(), s.length() - "</recording>".length());
+            s = s.substring("<alert>".length(), s.length() - "</alert>".length());
             String result[] = s.split(",");
 
-            String type = result[0].trim();
-            String direction = result[0].trim();
-            String place = result[1].trim();
-            String towards = result[2].trim();
-            String region = result[3].trim();
-            String startString = result[3].trim();
-            String endString = result[3].trim();
 
-            Integer start = 0;
-            try { start = Integer.parseInt(startString); }
+            String idString = result[0].trim();
+            String road = result[0].trim();
+            String startString = result[1].trim();
+            String endString = result[2].trim();
+            String cause = result[3].trim();
+            String towards = result[3].trim();
+            String date = result[3].trim();
+            String direction = result[3].trim();
+            String description = result[3].trim();
+            String description_type = result[3].trim();
+
+            double start = 0.0;
+            try { start = Double.parseDouble(startString); }
             catch (Exception e) {}
 
-            Integer end = 0;
-            try { end = Integer.parseInt(endString); }
+            double end = 0.0;
+            try { end = Double.parseDouble(endString); }
             catch (Exception e) {}
 
-            alerts.add(new Alert(type, start, end, direction, towards, place, region));
+            Integer id = 0;
+            try { id = Integer.parseInt(idString); }
+            catch (Exception e) {}
+
+             alerts.add(new Alert(id, road, start, end, cause, towards,date , direction, description, description_type));
         }
         rs.close();
         this.close();
