@@ -3,6 +3,10 @@
 # intelij 3
 *.iml
 /.idea
+/out
+LICENSE
+/war/WEB-INF/classes/
+build.xml
 
 # Package Files #
 *.jar
