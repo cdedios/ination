@@ -24,7 +24,7 @@ public class XQueryHelperTest {
         tester = new XQueryHelper();
         ArrayList<Alert> alerts = tester.getAlerts();
         for (Alert a : alerts ){
-            System.out.println(a.getTowards());
+            System.out.println(a.getId());
         }
     }
 }

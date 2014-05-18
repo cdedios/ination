@@ -56,12 +56,15 @@ public class XQueryHelper {
                 " for $r in $doc//cite:mct2_v_afectacions_data "+
                 " return <alert>" +
                     "{$r//cite:identificador}," +
-                    "{$r//cite:tipus}," +
-                    "{$r//cite:sentit}," +
-                    "{$r//cite:cap_a}," +
+                    "{$r//cite:carretera}," +
                     "{$r//cite:pk_inici}," +
                     "{$r//cite:pk_fi}," +
-                    "{$r//cite:data}" +
+                    "{$r//cite:causa}," +
+                    "{$r//cite:cap_a}," +
+                    "{$r//cite:data}," +
+                    "{$r//cite:sentit}," +
+                    "{$r//cite:descripcio}," +
+                    "{$r//cite:desripcio_tipus}" +
                 "</alert>";
 
     XQueryHelper(String xquery, URL input)
@@ -75,7 +78,7 @@ public class XQueryHelper {
         this.expr.bindDocument(new javax.xml.namespace.QName("doc"), urlconn.getInputStream(), null, null);
     }
 
-    XQueryHelper()
+    public XQueryHelper()
             throws ClassNotFoundException, InstantiationException, IllegalAccessException, XQException, IOException {
         URLConnection urlconn = inputURL.openConnection();
         urlconn.setReadTimeout(50000);
@@ -96,17 +99,16 @@ public class XQueryHelper {
             s = s.substring("<alert>".length(), s.length() - "</alert>".length());
             String result[] = s.split(",");
 
-
             String idString = result[0].trim();
-            String road = result[0].trim();
-            String startString = result[1].trim();
-            String endString = result[2].trim();
-            String cause = result[3].trim();
-            String towards = result[3].trim();
-            String date = result[3].trim();
-            String direction = result[3].trim();
-            String description = result[3].trim();
-            String description_type = result[3].trim();
+            String road = result[1].trim();
+            String startString = result[2].trim();
+            String endString = result[3].trim();
+            String cause = result[4].trim();
+            String towards = result[5].trim();
+            String date = result[6].trim();
+            String direction = result[7].trim();
+            String description = result[8].trim();
+            String description_type = result[9].trim();
 
             double start = 0.0;
             try { start = Double.parseDouble(startString); }

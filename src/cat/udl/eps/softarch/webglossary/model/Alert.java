@@ -1,16 +1,8 @@
 package cat.udl.eps.softarch.webglossary.model;
 
-import cat.udl.eps.softarch.webglossary.persistence.EMF;
-import com.google.appengine.api.datastore.Key;
-
-import javax.management.Query;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.ArrayList;
-import java.util.Date;
-//import java.
+
 
 /**
  * Created by carlos on 5/8/14.
