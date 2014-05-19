@@ -89,7 +89,7 @@ public class XQueryHelper {
         //this.expr.bindDocument(new javax.xml.namespace.QName("doc"), urlconn.getInputStream(), null, null);
     }
 
-    ArrayList<Alert> getAlerts() throws XQException {
+    public ArrayList<Alert> getAlerts() throws XQException {
         ArrayList<Alert> alerts = new ArrayList();
         XQResultSequence rs = this.expr.executeQuery();
 
