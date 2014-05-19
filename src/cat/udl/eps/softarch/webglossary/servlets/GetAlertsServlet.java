@@ -1,10 +1,12 @@
 package cat.udl.eps.softarch.webglossary.servlets;
 
 import cat.udl.eps.softarch.webglossary.model.Alert;
+import cat.udl.eps.softarch.webglossary.model.GlossaryEntry;
 import cat.udl.eps.softarch.webglossary.persistence.EMF;
 import cat.udl.eps.softarch.webglossary.utils.XQueryHelper;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -57,23 +59,14 @@ public class GetAlertsServlet extends HttpServlet {
     }
 
     private void updateGencatAlerts(ArrayList<Alert> oldAlerts, ArrayList<Alert> newAlerts) {
+        oldAlerts.allOld();
         for( Alert oldAlert: oldAlerts){
             if(!newAlerts.contains(oldAlert)){ // alerta que ja no es alerta
-
-            }
+                Alert.removeAlert(oldAlert);
+            }else if()
         }
     }
 
-    public static ArrayList<Alert> getStoredAlerts() {
-        ArrayList<Alert> alerts = new ArrayList<Alert>();
-        EntityManager em = EMF.get().createEntityManager();
-        try {
-            Query q = em.createQuery("SELECT * FROM Alert ");
-            alerts = new ArrayList<Alert>(q.getResultList());
-        } finally {
-            em.close();
-        }
-        return alerts;
-    }
+
 
 }

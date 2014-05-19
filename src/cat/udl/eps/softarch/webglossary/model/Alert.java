@@ -1,7 +1,9 @@
 package cat.udl.eps.softarch.webglossary.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import cat.udl.eps.softarch.webglossary.persistence.EMF;
+
+import javax.persistence.*;
+import java.util.ArrayList;
 
 
 /**
@@ -21,6 +23,7 @@ public class Alert{
     private String direction;
     private String description;
     private String description_type;
+    private boolean isNew = true;
 
 
     public Alert(){ };
@@ -46,6 +49,65 @@ public class Alert{
     public boolean isValid(){
         return true;
     }
+
+    public static void addAlert(Alert alert) {
+        EntityManager em = EMF.get().createEntityManager();
+        EntityTransaction txn = em.getTransaction();
+        try {
+            txn.begin();
+            em.persist(alert);
+            txn.commit(); }
+        catch (Exception e) {
+            //log.warning(e.getMessage());
+            }
+        finally {
+            if (txn.isActive()) txn.rollback();
+            em.close(); }
+    }
+
+    public static void removeAlert(Alert alert) {
+        EntityManager em = EMF.get().createEntityManager();
+        EntityTransaction txn = em.getTransaction();
+        try {
+            txn.begin();
+            em.remove(alert);
+            txn.commit(); }
+        catch (Exception e) {
+            //log.warning(e.getMessage());
+        }
+        finally {
+            if (txn.isActive()) txn.rollback();
+            em.close(); }
+    }
+
+    public static void updateAlert(Alert alert) {
+        EntityManager em = EMF.get().createEntityManager();
+        EntityTransaction txn = em.getTransaction();
+        try {
+            txn.begin();
+            em.refresh(alert);
+            txn.commit(); }
+        catch (Exception e) {
+            //log.warning(e.getMessage());
+        }
+        finally {
+            if (txn.isActive()) txn.rollback();
+            em.close(); }
+    }
+
+    public static ArrayList<Alert> getStoredAlerts() {
+        ArrayList<Alert> alerts = new ArrayList<Alert>();
+        EntityManager em = EMF.get().createEntityManager();
+        try {
+            Query q = em.createQuery("SELECT t FROM Alert t");
+            alerts = new ArrayList<Alert>(q.getResultList());
+        } finally {
+            em.close();
+        }
+        return alerts;
+    }
+
+    public void notNew(){this.isNew=false;}
 
     public int getId() {
         return id;
