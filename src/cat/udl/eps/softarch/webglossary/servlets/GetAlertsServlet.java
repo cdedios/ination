@@ -5,7 +5,7 @@ import cat.udl.eps.softarch.webglossary.persistence.EMF;
 import cat.udl.eps.softarch.webglossary.utils.XQueryHelper;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by carlos on 5/18/14.
  */
-public class GetItinerariesServlet extends HttpServlet {
+public class GetAlertsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -38,8 +38,10 @@ public class GetItinerariesServlet extends HttpServlet {
             */
         try {
             XQueryHelper helper = new XQueryHelper();
-            ArrayList<Alert> newAlerts = helper.getAlerts();
+            ArrayList<Alert> newAlerts = helper.getGencatAlerts();
             ArrayList<Alert> oldAlerts = new ArrayList<Alert>();
+            oldAlerts = getStoredAlerts();
+            updateGencatAlerts(oldAlerts,newAlerts);
 
 
 
@@ -52,6 +54,26 @@ public class GetItinerariesServlet extends HttpServlet {
         } catch (XQException e) {
             e.printStackTrace();
         }
+    }
+
+    private void updateGencatAlerts(ArrayList<Alert> oldAlerts, ArrayList<Alert> newAlerts) {
+        for( Alert oldAlert: oldAlerts){
+            if(!newAlerts.contains(oldAlert)){ // alerta que ja no es alerta
+
+            }
+        }
+    }
+
+    public static ArrayList<Alert> getStoredAlerts() {
+        ArrayList<Alert> alerts = new ArrayList<Alert>();
+        EntityManager em = EMF.get().createEntityManager();
+        try {
+            Query q = em.createQuery("SELECT * FROM Alert ");
+            alerts = new ArrayList<Alert>(q.getResultList());
+        } finally {
+            em.close();
+        }
+        return alerts;
     }
 
 }

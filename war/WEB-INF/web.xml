@@ -6,7 +6,7 @@
          version="3.0">
     <servlet>
         <servlet-name>GetItineraries</servlet-name>
-        <servlet-class>cat.udl.eps.softarch.webglossary.servlets.GetItinerariesServlet</servlet-class>
+        <servlet-class>cat.udl.eps.softarch.webglossary.servlets.GetAlertsServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListItineraries</servlet-name>

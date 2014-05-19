@@ -1,7 +1,6 @@
 package cat.udl.eps.softarch.webglossary.utils;
 
 import cat.udl.eps.softarch.webglossary.model.Alert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import javax.xml.xquery.XQException;
@@ -22,7 +21,7 @@ public class XQueryHelperTest {
     public void testXquery() throws ClassNotFoundException, XQException,
             InstantiationException, IOException, IllegalAccessException {
         tester = new XQueryHelper();
-        ArrayList<Alert> alerts = tester.getAlerts();
+        ArrayList<Alert> alerts = tester.getGencatAlerts();
         for (Alert a : alerts ){
             System.out.println(a.getId());
         }
