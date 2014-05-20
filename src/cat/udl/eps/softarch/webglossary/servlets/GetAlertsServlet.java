@@ -42,7 +42,7 @@ public class GetAlertsServlet extends HttpServlet {
             XQueryHelper helper = new XQueryHelper();
             ArrayList<Alert> newAlerts = helper.getGencatAlerts();
             ArrayList<Alert> oldAlerts = new ArrayList<Alert>();
-            oldAlerts = getStoredAlerts();
+            oldAlerts = Alert.getStoredAlerts();
             updateGencatAlerts(oldAlerts,newAlerts);
 
 
@@ -59,14 +59,19 @@ public class GetAlertsServlet extends HttpServlet {
     }
 
     private void updateGencatAlerts(ArrayList<Alert> oldAlerts, ArrayList<Alert> newAlerts) {
-        oldAlerts.allOld();
+        allOld(oldAlerts);
         for( Alert oldAlert: oldAlerts){
             if(!newAlerts.contains(oldAlert)){ // alerta que ja no es alerta
                 Alert.removeAlert(oldAlert);
-            }else if()
+            }//else if()
         }
     }
 
+    private void allOld(ArrayList<Alert> alerts){
+        for (Alert alert: alerts){
+            alert.notNew();
+        }
+    }
 
 
 }
