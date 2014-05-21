@@ -55,16 +55,16 @@ public class XQueryHelper {
                 "declare variable $doc := doc(\"http://www.gencat.cat/transit/opendata/incidenciesGML.xml\");"+
                 " for $r in $doc//cite:mct2_v_afectacions_data "+
                 " return <alert>" +
-                    "{$r//cite:identificador}," +
-                    "{$r//cite:carretera}," +
-                    "{$r//cite:pk_inici}," +
-                    "{$r//cite:pk_fi}," +
-                    "{$r//cite:causa}," +
-                    "{$r//cite:cap_a}," +
-                    "{$r//cite:data}," +
-                    "{$r//cite:sentit}," +
-                    "{$r//cite:descripcio}," +
-                    "{$r//cite:desripcio_tipus}" +
+                    "{$r//cite:identificador/text()}," +
+                    "{$r//cite:carretera/text()}," +
+                    "{$r//cite:pk_inici/text()}," +
+                    "{$r//cite:pk_fi/text()}," +
+                    "{$r//cite:causa/text()}," +
+                    "{$r//cite:cap_a/text()}," +
+                    "{$r//cite:data/text()}," +
+                    "{$r//cite:sentit/text()}," +
+                    "{$r//cite:descripcio/text()}," +
+                    "{$r//cite:desripcio_tipus/text()}" +
                 "</alert>";
 
     XQueryHelper(String xquery, URL input)

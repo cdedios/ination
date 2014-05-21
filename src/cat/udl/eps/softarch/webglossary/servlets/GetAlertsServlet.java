@@ -31,7 +31,7 @@ public class GetAlertsServlet extends HttpServlet {
             ArrayList<Alert> oldAlerts = Alert.getStoredAlerts();
             ArrayList<Alert> finalAlerts = updateGencatAlerts(oldAlerts,newAlerts);
 
-            request.setAttribute("terms", finalAlerts);
+            request.setAttribute("alerts", finalAlerts);
             request.getRequestDispatcher("list.jsp").forward(request, response);
 
 

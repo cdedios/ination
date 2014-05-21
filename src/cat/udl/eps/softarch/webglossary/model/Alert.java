@@ -1,6 +1,7 @@
 package cat.udl.eps.softarch.webglossary.model;
 
 import cat.udl.eps.softarch.webglossary.persistence.EMF;
+import com.google.appengine.api.datastore.Key;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,6 +14,9 @@ import java.util.ArrayList;
 @Entity
 public class Alert{
     @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private Key key;
+
     private int id;
     private String road;
     private double start;
