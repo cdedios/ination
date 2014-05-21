@@ -25,26 +25,14 @@ public class GetAlertsServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-/*
-        EntityManager em = EMF.get().createEntityManager();
-        EntityTransaction txn = em.getTransaction();
-        try {
-            txn.begin();
-            em.persist(ge);
-            txn.commit(); }
-        catch (Exception e) {
-            log.warning(e.getMessage()); }
-        finally {
-            if (txn.isActive()) txn.rollback();
-            em.close(); }
-            */
         try {
             XQueryHelper helper = new XQueryHelper();
             ArrayList<Alert> newAlerts = helper.getGencatAlerts();
-            ArrayList<Alert> oldAlerts = new ArrayList<Alert>();
-            oldAlerts = Alert.getStoredAlerts();
-            updateGencatAlerts(oldAlerts,newAlerts);
+            ArrayList<Alert> oldAlerts = Alert.getStoredAlerts();
+            ArrayList<Alert> finalAlerts = updateGencatAlerts(oldAlerts,newAlerts);
 
+            request.setAttribute("terms", finalAlerts);
+            request.getRequestDispatcher("list.jsp").forward(request, response);
 
 
         } catch (ClassNotFoundException e) {
@@ -58,13 +46,22 @@ public class GetAlertsServlet extends HttpServlet {
         }
     }
 
-    private void updateGencatAlerts(ArrayList<Alert> oldAlerts, ArrayList<Alert> newAlerts) {
+    private ArrayList<Alert> updateGencatAlerts(ArrayList<Alert> oldAlerts, ArrayList<Alert> newAlerts) {
+        ArrayList<Alert> finalAlerts = new ArrayList<Alert>();
         allOld(oldAlerts);
         for( Alert oldAlert: oldAlerts){
             if(!newAlerts.contains(oldAlert)){ // alerta que ja no es alerta
                 Alert.removeAlert(oldAlert);
-            }//else if()
+                finalAlerts.remove(oldAlert);
+            }
         }
+        for(Alert newAlert: newAlerts){
+            if(!oldAlerts.contains(newAlert)){// alerta nova
+                Alert.addAlert(newAlert);
+                finalAlerts.add(newAlert);
+            }
+        }
+        return finalAlerts;
     }
 
     private void allOld(ArrayList<Alert> alerts){
