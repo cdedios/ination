@@ -18,18 +18,19 @@ import java.util.ArrayList;
  * Created by Carlos on 15/05/2014.
  */
 public class ListAlertsServlet extends HttpServlet {
-    public void listAlerts(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, XQException, InstantiationException, IllegalAccessException {
-        //ArrayList<Alert> alerts = Alert.getList();
-        //XQueryHelper xqhp = new XQueryHelper();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //ArrayList<Alert> alerts = xqhp.get
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ArrayList<Alert> alerts = Alert.getStoredAlerts();
+
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
         out.println("<html><body>");
-        /*for (Alert a: alerts) {
+        for (Alert a: alerts) {
             out.println("<p>Identifier: "+a.getId()+"<br/>Date: "+a.getDate()+"</p>");
-        }*/
+        }
         out.println("</body></html>");
     }
 }

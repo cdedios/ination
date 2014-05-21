@@ -7,7 +7,7 @@
 LICENSE
 /war/WEB-INF/classes/
 build.xml
-
+/war/WEB-INF/appengine-generated/
 # Package Files #
 *.jar
 *.war
