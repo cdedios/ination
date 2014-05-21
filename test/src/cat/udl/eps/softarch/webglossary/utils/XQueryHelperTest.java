@@ -23,7 +23,7 @@ public class XQueryHelperTest {
         tester = new XQueryHelper();
         ArrayList<Alert> alerts = tester.getGencatAlerts();
         for (Alert a : alerts ){
-            System.out.println(a.getId());
+            System.out.println(a.getCause());
         }
     }
 }
