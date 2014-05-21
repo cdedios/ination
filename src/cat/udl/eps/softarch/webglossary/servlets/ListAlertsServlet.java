@@ -25,12 +25,7 @@ public class ListAlertsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<Alert> alerts = Alert.getStoredAlerts();
 
-        PrintWriter out = response.getWriter();
-        response.setContentType("text/html");
-        out.println("<html><body>");
-        for (Alert a: alerts) {
-            out.println("<p>Identifier: "+a.getId()+"<br/>Date: "+a.getDate()+"</p>");
-        }
-        out.println("</body></html>");
+        request.setAttribute("alerts", alerts);
+        request.getRequestDispatcher("list.jsp").forward(request, response);
     }
 }

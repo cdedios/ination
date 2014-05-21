@@ -1,15 +1,15 @@
-<%@ page import="cat.udl.eps.softarch.webglossary.model.GlossaryEntry" %>
+<%@ page import="cat.udl.eps.softarch.webglossary.model.Alert" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Web Glossary</title>
+    <title>Stored Alerts</title>
 </head>
 <body>
 <%
-    ArrayList<GlossaryEntry> terms = (ArrayList<GlossaryEntry>) request.getAttribute("terms");
-    for (GlossaryEntry ge: terms) { %>
-        <p>Term: <%=ge.getTerm()%> <br/>Description: <%=ge.getDescription()%> </p>
+    ArrayList<Alert> alerts = (ArrayList<Alert>) request.getAttribute("alerts");
+    for (Alert ge: alerts) { %>
+        <p>Alert: <%=ge.getId()%> <br/>Description: <%=ge.getDescription()%> </p>
 <%  } %>
 </body>
 </html>
