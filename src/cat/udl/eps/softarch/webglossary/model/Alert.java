@@ -111,6 +111,8 @@ public class Alert{
         return alerts;
     }
 
+    public boolean isNew(){return this.isNew;}
+
     public void notNew(){this.isNew=false;}
 
     public int getId() {

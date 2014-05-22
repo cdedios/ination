@@ -47,8 +47,8 @@ public class GetAlertsServlet extends HttpServlet {
     }
 
     private ArrayList<Alert> updateGencatAlerts(ArrayList<Alert> oldAlerts, ArrayList<Alert> newAlerts) {
-        ArrayList<Alert> finalAlerts = new ArrayList<Alert>();
-        allOld(oldAlerts);
+        ArrayList<Alert> finalAlerts = new ArrayList<Alert>(oldAlerts);
+        oldAlerts = allOld(oldAlerts);
         for( Alert oldAlert: oldAlerts){
             if(!newAlerts.contains(oldAlert)){ // alerta que ja no es alerta
                 Alert.removeAlert(oldAlert);
@@ -64,10 +64,11 @@ public class GetAlertsServlet extends HttpServlet {
         return finalAlerts;
     }
 
-    private void allOld(ArrayList<Alert> alerts){
+    private ArrayList<Alert> allOld(ArrayList<Alert> alerts){
         for (Alert alert: alerts){
             alert.notNew();
         }
+        return alerts;
     }
 
 
