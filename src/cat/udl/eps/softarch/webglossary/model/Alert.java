@@ -195,4 +195,14 @@ public class Alert{
         this.description_type = description_type;
     }
 
+    @Override
+    public boolean equals(Object other)
+    {
+        System.out.print("He entrat al equals canelo");
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof Alert))return false;
+        Alert otherMyClass = (Alert)other;
+        return otherMyClass.getId() == this.id;
+    }
 }
