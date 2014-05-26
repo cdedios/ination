@@ -1,5 +1,15 @@
-ination
+Traffic Incidents Monitor
 =======
+
+Innation team: 
+* Albert Bergés
+* Carlos de Dios
+
+Repository:
+https://github.com/rhizomik/ination
+
+Google App Engine URL:
+https://alertestransit.appspot.com
 
 Traffic Incidents Monitor
 
