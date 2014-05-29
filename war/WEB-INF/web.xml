@@ -46,7 +46,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Itineraries</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/itinerary</url-pattern>
     </servlet-mapping>
     <!-- <servlet-mapping>
          <servlet-name>AddEntry</servlet-name>

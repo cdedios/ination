@@ -73,7 +73,7 @@ public class Itinerary {
         EntityManager em = EMF.get().createEntityManager();
         try {
             Query q = em.createQuery("SELECT t FROM Itinerary t "+
-                    "WHERE t.user =" + id);
+                    "WHERE t.user LIKE" + id);
             itineraries = new ArrayList<Itinerary>(q.getResultList());
         } finally {
             em.close();

@@ -15,7 +15,7 @@
 </head>
 
 <h1>Add itinerary</h1>
-<form action="/" method="post">
+<form action="/itinerary" method="post">
     <div>Road: <input type="text" name="road" value=""/></div>
     <div>Start: <input type="text" name="start" value=""/></div>
     <div>End: <input type="text" name="end" value=""/></div>
