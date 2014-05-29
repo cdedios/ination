@@ -12,6 +12,10 @@
         <servlet-name>ListItineraries</servlet-name>
         <servlet-class>cat.udl.eps.softarch.webglossary.servlets.ListAlertsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EmailServlet</servlet-name>
+        <servlet-class>cat.udl.eps.softarch.webglossary.servlets.EmailServlet</servlet-class>
+    </servlet>
     <!--<servlet>
         <servlet-name>AddEntry</servlet-name>
         <servlet-class>cat.udl.eps.softarch.webglossary.servlets.AddEntryServlet</servlet-class>
