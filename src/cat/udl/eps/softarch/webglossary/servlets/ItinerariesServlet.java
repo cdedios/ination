@@ -24,19 +24,14 @@ public class ItinerariesServlet extends HttpServlet {
         User currentUser = userService.getCurrentUser();
 
         if (currentUser != null) {
-            /*ArrayList<Itinerary> alerts = Itinerary.getStoredItineraries(currentUser.getEmail());
+            //ArrayList<Itinerary> alerts = Itinerary.getStoredItineraries(currentUser.getEmail());
 
-            request.setAttribute("alerts", alerts);
+            //request.setAttribute("alerts", alerts);
+
             request.getRequestDispatcher("itinerary.jsp").forward(request, response);
-            */
         } else {
             response.sendRedirect(userService.createLoginURL(request.getRequestURI()));
         }
-
-
-        /*request.setAttribute("alerts", alerts);
-        request.getRequestDispatcher("list.jsp").forward(request, response);*/
-
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -48,10 +43,12 @@ public class ItinerariesServlet extends HttpServlet {
             double end =  Double.parseDouble(request.getParameter("end"));
             boolean enabled = Boolean.parseBoolean(request.getParameter("enabled"));
 
-            Itinerary.addItinerary(new Itinerary(currentUser.getEmail(),start,end,enabled));
+            Itinerary.addItinerary(new Itinerary(currentUser.getEmail(),road,start,end,enabled));
 
             response.setContentType("text/plain");
-            response.getWriter().println(currentUser.getNickname()+" added a new entry.");
+            response.getWriter().println(currentUser.getNickname()+" added a new e" +
+                    "ntry. " +
+                    "Road"+road+"Start"+start+"end"+end+"enabled"+enabled);
         } else {
             response.sendRedirect(userService.createLoginURL(request.getRequestURI()));
         }

@@ -46,7 +46,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Itineraries</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/itineraries</url-pattern>
     </servlet-mapping>
     <!-- <servlet-mapping>
          <servlet-name>AddEntry</servlet-name>
@@ -70,6 +70,6 @@
      </servlet-mapping>-->
 
     <welcome-file-list>
-        <welcome-file>itinerary.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 </web-app>

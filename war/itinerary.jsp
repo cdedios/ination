@@ -14,8 +14,10 @@
     <title>Itineraries</title>
 </head>
 
+
+<body>
 <h1>Add itinerary</h1>
-<form action="/" method="post">
+<form action="/itineraries" method="post">
     <div>Road: <input type="text" name="road" value=""/></div>
     <div>Start: <input type="text" name="start" value=""/></div>
     <div>End: <input type="text" name="end" value=""/></div>
@@ -28,7 +30,6 @@
 <br>
 
 <h1>Stored itineraries</h1>
-<body>
 <TABLE BORDER="1">
     <TR>
         <TH>Owner</TH>
@@ -38,11 +39,10 @@
         <TH>Enabled</TH>
     </TR>
     <%
-        ArrayList<Itinerary> itineraries = (ArrayList<Itinerary>) request.getAttribute("itineraries");
-        if(itineraries.isEmpty())
-        {
+        if(request.getAttribute("itineraries") == null){
             %><h1>Empty list</h1><%
         }else{
+            ArrayList<Itinerary> itineraries = (ArrayList<Itinerary>) request.getAttribute("itineraries");
             for (Itinerary it: itineraries) {
                 String color = "#d3d3d3";
                 if (it.isEnabled()) color ="#7fff00";

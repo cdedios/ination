@@ -21,8 +21,9 @@ public class Itinerary {
 
     protected Itinerary() {}
 
-    public Itinerary(String owner, double start, double end, boolean enabled) {
+    public Itinerary(String owner, String road, double start, double end, boolean enabled) {
         this.owner = owner;
+        this.road = road;
         this.start = start;
         this.end = end;
         this.enabled = enabled;
