@@ -14,13 +14,14 @@ public class Itinerary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Key key;
     private String owner;
-    private int start;
-    private int end;
+    private String road;
+    private double start;
+    private double end;
     private boolean enabled;
 
     protected Itinerary() {}
 
-    public Itinerary(String owner, int start, int end, boolean enabled) {
+    public Itinerary(String owner, double start, double end, boolean enabled) {
         this.owner = owner;
         this.start = start;
         this.end = end;
@@ -35,19 +36,27 @@ public class Itinerary {
         this.owner = owner;
     }
 
-    public int getStart() {
+    public String getRoad() {
+        return road;
+    }
+
+    public void setRoad(String road) {
+        this.road = road;
+    }
+
+    public double getStart() {
         return start;
     }
 
-    public void setStart(int start) {
+    public void setStart(double start) {
         this.start = start;
     }
 
-    public int getEnd() {
+    public double getEnd() {
         return end;
     }
 
-    public void setEnd(int end) {
+    public void setEnd(double end) {
         this.end = end;
     }
 
