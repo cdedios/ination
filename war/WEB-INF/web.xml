@@ -70,6 +70,6 @@
      </servlet-mapping>-->
 
     <welcome-file-list>
-        <welcome-file>itinerary.jsp</welcome-file>
+        <welcome-file>Itinerary.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

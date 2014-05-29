@@ -39,18 +39,24 @@
     </TR>
     <%
         ArrayList<Itinerary> itineraries = (ArrayList<Itinerary>) request.getAttribute("itineraries");
-        for (Itinerary it: itineraries) {
-            String color = "#d3d3d3";
-            if (it.isEnabled()) color ="#7fff00";
-    %>
-    <TR bgcolor= <%=color %>>
-        <TD> <%= it.getOwner() %> </TD>
-        <TD> <%= it.getRoad() %> </TD>
-        <TD> <%= it.getStart() %> </TD>
-        <TD> <%= it.getEnd() %> </TD>
-        <TD> <%= it.isEnabled() %> </TD>
-    </TR>
-    <%  } %>
+        if(itineraries.isEmpty())
+        {
+            %><h1>Empty list</h1><%
+        }else{
+            for (Itinerary it: itineraries) {
+                String color = "#d3d3d3";
+                if (it.isEnabled()) color ="#7fff00";
+            %>
+                <TR bgcolor= <%=color %>>
+                    <TD> <%= it.getOwner() %> </TD>
+                    <TD> <%= it.getRoad() %> </TD>
+                    <TD> <%= it.getStart() %> </TD>
+                    <TD> <%= it.getEnd() %> </TD>
+                    <TD> <%= it.isEnabled() %> </TD>
+                </TR>
+    <%  }
+        }%>
+
 </TABLE>
 </body>
 </html>
