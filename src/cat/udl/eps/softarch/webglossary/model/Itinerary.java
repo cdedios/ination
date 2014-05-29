@@ -13,25 +13,25 @@ public class Itinerary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Key key;
-    private User owner;
+    private String owner;
     private int start;
     private int end;
     private boolean enabled;
 
     protected Itinerary() {}
 
-    public Itinerary(User owner, int start, int end, boolean enabled) {
+    public Itinerary(String owner, int start, int end, boolean enabled) {
         this.owner = owner;
         this.start = start;
         this.end = end;
         this.enabled = enabled;
     }
 
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 
