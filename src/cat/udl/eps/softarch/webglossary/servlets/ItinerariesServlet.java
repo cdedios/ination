@@ -48,7 +48,7 @@ public class ItinerariesServlet extends HttpServlet {
             double end =  Double.parseDouble(request.getParameter("end"));
             boolean enabled = Boolean.parseBoolean(request.getParameter("enabled"));
 
-            Itinerary.addItinerary(new Itinerary(currentUser.getEmail(),start,end),enabled);
+            Itinerary.addItinerary(new Itinerary(currentUser.getEmail(),start,end,enabled));
 
             response.setContentType("text/plain");
             response.getWriter().println(currentUser.getNickname()+" added a new entry.");
