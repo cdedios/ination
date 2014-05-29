@@ -27,7 +27,7 @@ public class ItinerariesServlet extends HttpServlet {
             /*ArrayList<Itinerary> alerts = Itinerary.getStoredItineraries(currentUser.getEmail());
 
             request.setAttribute("alerts", alerts);
-            request.getRequestDispatcher("itineriaries.jsp").forward(request, response);
+            request.getRequestDispatcher("itinerary.jsp").forward(request, response);
             */
         } else {
             response.sendRedirect(userService.createLoginURL(request.getRequestURI()));
