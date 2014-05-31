@@ -24,9 +24,9 @@ public class ItinerariesServlet extends HttpServlet {
         User currentUser = userService.getCurrentUser();
 
         if (currentUser != null) {
-            //ArrayList<Itinerary> alerts = Itinerary.getStoredItineraries(currentUser.getEmail());
+            ArrayList<Itinerary> itineraries = Itinerary.getStoredItineraries(currentUser.getEmail());
 
-            //request.setAttribute("alerts", alerts);
+            request.setAttribute("itineraries", itineraries);
 
             request.getRequestDispatcher("itinerary.jsp").forward(request, response);
         } else {
