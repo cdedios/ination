@@ -45,10 +45,12 @@ public class ItinerariesServlet extends HttpServlet {
 
             Itinerary.addItinerary(new Itinerary(currentUser.getEmail(),road,start,end,enabled));
 
-            response.setContentType("text/plain");
+            response.sendRedirect("/itineraries");
+            /*response.setContentType("text/plain");
             response.getWriter().println(currentUser.getNickname()+" added a new e" +
                     "ntry. " +
                     "Road"+road+"Start"+start+"end"+end+"enabled"+enabled);
+            */
         } else {
             response.sendRedirect(userService.createLoginURL(request.getRequestURI()));
         }

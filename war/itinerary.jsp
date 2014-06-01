@@ -28,22 +28,22 @@
 <br>
 <br>
 <br>
+<%
+    if(request.getAttribute("itineraries") == null){
+        %><h1>Empty list</h1><%
+    }else{
+        ArrayList<Itinerary> itineraries = (ArrayList<Itinerary>) request.getAttribute("itineraries");
 
-<h1>Stored itineraries</h1>
-<TABLE BORDER="1">
-    <TR>
-        <TH>Owner</TH>
-        <TH>Road</TH>
-        <TH>Start</TH>
-        <TH>End</TH>
-        <TH>Enabled</TH>
-    </TR>
-    <%
-        if(request.getAttribute("itineraries") == null){
-            %><h1>Empty list</h1><%
-        }else{
-            ArrayList<Itinerary> itineraries = (ArrayList<Itinerary>) request.getAttribute("itineraries");
-            for (Itinerary it: itineraries) {
+        %> <h1>Stored itineraries</h1>
+        <TABLE BORDER="1">
+            <TR>
+                <TH>Owner</TH>
+                <TH>Road</TH>
+                <TH>Start</TH>
+                <TH>End</TH>
+                <TH>Enabled</TH>
+            </TR>
+            <%for (Itinerary it: itineraries) {
                 String color = "#d3d3d3";
                 if (it.isEnabled()) color ="#7fff00";
             %>
@@ -53,6 +53,7 @@
                     <TD> <%= it.getStart() %> </TD>
                     <TD> <%= it.getEnd() %> </TD>
                     <TD> <%= it.isEnabled() %> </TD>
+                    <TD><button class="editbtn">edit</button> <%= it.isEnabled() %> </TD>
                 </TR>
     <%  }
         }%>
