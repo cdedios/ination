@@ -9,10 +9,13 @@ import java.util.ArrayList;
 /**
  * Created by Carlos on 14/05/2014.
  */
+
+@Entity
 public class Itinerary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Key key;
+
     private String owner;
     private String road;
     private double start;
@@ -74,7 +77,9 @@ public class Itinerary {
         EntityManager em = EMF.get().createEntityManager();
         try {
             Query q = em.createQuery("SELECT t FROM Itinerary t "+
-                    "WHERE t.user LIKE" + id);
+                    "WHERE (t.owner LIKE '" +id+"%')");
+            /*Query q = em.createQuery("SELECT t FROM Itinerary t "+
+                    "WHERE t.owner ='"+id+"'");*/
             itineraries = new ArrayList<Itinerary>(q.getResultList());
         } finally {
             em.close();
@@ -85,6 +90,8 @@ public class Itinerary {
     public static void addItinerary(Itinerary itinerary) {
         EntityManager em = EMF.get().createEntityManager();
         EntityTransaction txn = em.getTransaction();
+        System.out.println(itinerary.getOwner());
+        System.out.println(itinerary.getRoad());
         try {
             txn.begin();
             em.persist(itinerary);
