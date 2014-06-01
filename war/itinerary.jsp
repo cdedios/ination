@@ -11,6 +11,11 @@
 <html>
 
 <head>
+    <script>
+        function updateItinerary(itineraryId){
+           // <%// Itinerary.changeEnabled(itineraryID);%>it.document.getElementById("demo").innerHTML="Hello World";
+        }
+    </script>
     <title>Itineraries</title>
 </head>
 
@@ -30,10 +35,9 @@
 <br>
 <%
     if(request.getAttribute("itineraries") == null){
-        %><h1>Empty list</h1><%
+        %><h1>No Itineraries saved yet!</h1><%
     }else{
         ArrayList<Itinerary> itineraries = (ArrayList<Itinerary>) request.getAttribute("itineraries");
-
         %> <h1>Stored itineraries</h1>
         <TABLE BORDER="1">
             <TR>
@@ -44,8 +48,8 @@
                 <TH>Enabled</TH>
             </TR>
             <%for (Itinerary it: itineraries) {
-                String color = "#d3d3d3";
-                if (it.isEnabled()) color ="#7fff00";
+                String color = "#d3d3d3", button = "Enable";
+                if (it.isEnabled()) color ="#7fff00"; button ="Disenable";
             %>
                 <TR bgcolor= <%=color %>>
                     <TD> <%= it.getOwner() %> </TD>
@@ -53,10 +57,10 @@
                     <TD> <%= it.getStart() %> </TD>
                     <TD> <%= it.getEnd() %> </TD>
                     <TD> <%= it.isEnabled() %> </TD>
-                    <TD><button class="editbtn">edit</button> <%= it.isEnabled() %> </TD>
+                    <TD><button onclick="updateItinerary(<% it.getKey(); %>"> <%= button %> </button> </TD>
                 </TR>
-    <%  }
-        }%>
+        <%}
+    }%>
 
 </TABLE>
 </body>

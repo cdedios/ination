@@ -36,6 +36,8 @@ public class Itinerary {
         return owner;
     }
 
+    public Key getKey(){return key;}
+
     public void setOwner(String owner) {
         this.owner = owner;
     }
@@ -110,6 +112,22 @@ public class Itinerary {
         try {
             txn.begin();
             em.remove(itinerary);
+            txn.commit(); }
+        catch (Exception e) {
+            //log.warning(e.getMessage());
+        }
+        finally {
+            if (txn.isActive()) txn.rollback();
+            em.close(); }
+    }
+
+    public static void changeEnabled(Itinerary itinerary){
+        EntityManager em = EMF.get().createEntityManager();
+        EntityTransaction txn = em.getTransaction();
+        try {
+            txn.begin();
+            itinerary.setEnabled(!itinerary.isEnabled());
+            em.refresh(itinerary);
             txn.commit(); }
         catch (Exception e) {
             //log.warning(e.getMessage());

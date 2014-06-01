@@ -26,7 +26,8 @@ public class ItinerariesServlet extends HttpServlet {
         if (currentUser != null) {
             ArrayList<Itinerary> itineraries = Itinerary.getStoredItineraries(currentUser.getEmail());
 
-            request.setAttribute("itineraries", itineraries);
+            if(!itineraries.isEmpty())
+                request.setAttribute("itineraries", itineraries);
 
             request.getRequestDispatcher("itinerary.jsp").forward(request, response);
         } else {
