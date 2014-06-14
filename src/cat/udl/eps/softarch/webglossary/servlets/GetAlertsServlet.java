@@ -2,6 +2,7 @@ package cat.udl.eps.softarch.webglossary.servlets;
 
 import cat.udl.eps.softarch.webglossary.model.Alert;
 import cat.udl.eps.softarch.webglossary.model.GlossaryEntry;
+import cat.udl.eps.softarch.webglossary.model.Itinerary;
 import cat.udl.eps.softarch.webglossary.persistence.EMF;
 import cat.udl.eps.softarch.webglossary.utils.XQueryHelper;
 
@@ -31,6 +32,8 @@ public class GetAlertsServlet extends HttpServlet {
             ArrayList<Alert> oldAlerts = Alert.getStoredAlerts();
             ArrayList<Alert> finalAlerts = updateGencatAlerts(oldAlerts,newAlerts);
 
+
+
             request.setAttribute("alerts", finalAlerts);
             request.getRequestDispatcher("list.jsp").forward(request, response);
 
@@ -59,16 +62,28 @@ public class GetAlertsServlet extends HttpServlet {
             if(!oldAlerts.contains(newAlert)){// alerta nova
                 Alert.addAlert(newAlert);
                 finalAlerts.add(newAlert);
+                sendAdvice(newAlert);
             }
         }
         return finalAlerts;
     }
+
+
 
     private ArrayList<Alert> allOld(ArrayList<Alert> alerts){
         for (Alert alert: alerts){
             alert.notNew();
         }
         return alerts;
+    }
+
+    private void sendAdvice(Alert alert){
+        ArrayList<Itinerary> allItineraries = Itinerary.getAllItineraries();
+        for(Itinerary i: allItineraries){
+            if(i.getRoad()==alert.getRoad()){
+                sendMail
+            }
+        }
     }
 
 

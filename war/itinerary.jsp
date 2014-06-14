@@ -11,11 +11,6 @@
 <html>
 
 <head>
-    <script>
-        function updateItinerary(itineraryId){
-           // <%// Itinerary.changeEnabled(itineraryID);%>it.document.getElementById("demo").innerHTML="Hello World";
-        }
-    </script>
     <title>Itineraries</title>
 </head>
 
@@ -26,7 +21,7 @@
     <div>Road: <input type="text" name="road" value=""/></div>
     <div>Start: <input type="text" name="start" value=""/></div>
     <div>End: <input type="text" name="end" value=""/></div>
-    <div>Enabled: <input type="checkbox" name="enabled" value=""/></div>
+    <div>Enabled: <input type="checkbox" name="enabled" value="true"/></div>
     <div><input type="submit" value="Add"/></div>
 </form>
 
@@ -49,15 +44,17 @@
             </TR>
             <%for (Itinerary it: itineraries) {
                 String color = "#d3d3d3", button = "Enable";
-                if (it.isEnabled()) color ="#7fff00"; button ="Disenable";
+                if (it.isEnabled()){
+                    color ="#7fff00";
+                    button ="Disenable";
+                }
             %>
-                <TR bgcolor= <%=color %>>
                     <TD> <%= it.getOwner() %> </TD>
                     <TD> <%= it.getRoad() %> </TD>
                     <TD> <%= it.getStart() %> </TD>
                     <TD> <%= it.getEnd() %> </TD>
                     <TD> <%= it.isEnabled() %> </TD>
-                    <TD><button onclick="updateItinerary(<% it.getKey(); %>"> <%= button %> </button> </TD>
+                    <TD><button onclick="<%Itinerary.changeEnabled(it);%>"> <%= button %> </button> </TD>
                 </TR>
         <%}
     }%>

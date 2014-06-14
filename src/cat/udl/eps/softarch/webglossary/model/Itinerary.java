@@ -16,6 +16,7 @@ public class Itinerary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Key key;
 
+    //private long id;
     private String owner;
     private String road;
     private double start;
@@ -24,7 +25,8 @@ public class Itinerary {
 
     protected Itinerary() {}
 
-    public Itinerary(String owner, String road, double start, double end, boolean enabled) {
+    public Itinerary( String owner, String road, double start, double end, boolean enabled) {
+        //this.id = key.getId();
         this.owner = owner;
         this.road = road;
         this.start = start;
@@ -37,6 +39,8 @@ public class Itinerary {
     }
 
     public Key getKey(){return key;}
+
+    //public long getId(){ return this.id; }
 
     public void setOwner(String owner) {
         this.owner = owner;
@@ -74,7 +78,7 @@ public class Itinerary {
         this.enabled = enabled;
     }
 
-    public static ArrayList<Itinerary> getStoredItineraries(String id) {
+    public static ArrayList<Itinerary> getStoredItinerariesByOwner(String id) {
         ArrayList<Itinerary> itineraries = new ArrayList<Itinerary>();
         EntityManager em = EMF.get().createEntityManager();
         try {
@@ -83,6 +87,32 @@ public class Itinerary {
             /*Query q = em.createQuery("SELECT t FROM Itinerary t "+
                     "WHERE t.owner ='"+id+"'");*/
             itineraries = new ArrayList<Itinerary>(q.getResultList());
+        } finally {
+            em.close();
+        }
+        return itineraries;
+    }
+    public static Itinerary getItinerary(long id) {
+        Itinerary it = new Itinerary();
+        EntityManager em = EMF.get().createEntityManager();
+        try {
+            Query q = em.createQuery("SELECT t FROM Itinerary t "+
+                    "WHERE (t.key.getKey() LIKE '" +id+"%')");
+            it = (Itinerary) q.getSingleResult();
+
+        } finally {
+            em.close();
+        }
+        return it;
+    }
+
+    public static ArrayList<Itinerary>  getAllItineraries() {
+        ArrayList<Itinerary> itineraries = new ArrayList<Itinerary>();
+        EntityManager em = EMF.get().createEntityManager();
+        try {
+            Query q = em.createQuery("SELECT t FROM Itinerary t");
+            itineraries = new ArrayList<Itinerary>(q.getResultList());
+
         } finally {
             em.close();
         }

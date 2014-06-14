@@ -1,8 +1,5 @@
 package cat.udl.eps.softarch.webglossary.servlets;
 
-import cat.udl.eps.softarch.webglossary.model.Alert;
-import cat.udl.eps.softarch.webglossary.model.Glossary;
-import cat.udl.eps.softarch.webglossary.model.GlossaryEntry;
 import cat.udl.eps.softarch.webglossary.model.Itinerary;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
@@ -24,7 +21,7 @@ public class ItinerariesServlet extends HttpServlet {
         User currentUser = userService.getCurrentUser();
 
         if (currentUser != null) {
-            ArrayList<Itinerary> itineraries = Itinerary.getStoredItineraries(currentUser.getEmail());
+            ArrayList<Itinerary> itineraries = Itinerary.getStoredItinerariesByOwner(currentUser.getEmail());
 
             if(!itineraries.isEmpty())
                 request.setAttribute("itineraries", itineraries);
