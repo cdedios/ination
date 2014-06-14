@@ -43,7 +43,14 @@
                 <TH>Enabled</TH>
             </TR>
             <%for (Itinerary it: itineraries) {
-                String color = "#d3d3d3", button = "Enable";
+                //long id = it.getKey().getId();
+                String color = "#d3d3d3",
+                        button = "Enable",
+                        id = String.valueOf(it.getKey().getId()),
+                        url1 = "/itineraries/"+id+"/change",
+                        url2 = "/itineraries/"+id+"/delete";
+
+
                 if (it.isEnabled()){
                     color ="#7fff00";
                     button ="Disenable";
@@ -54,7 +61,8 @@
                     <TD> <%= it.getStart() %> </TD>
                     <TD> <%= it.getEnd() %> </TD>
                     <TD> <%= it.isEnabled() %> </TD>
-                    <TD><button onclick="<%Itinerary.changeEnabled(it);%>"> <%= button %> </button> </TD>
+                    <TD><a href=<%=url1%>><%=button%></a> </TD>
+                    <TD><a href=<%=url2%>>Delete</a> </TD>
                 </TR>
         <%}
     }%>

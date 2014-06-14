@@ -3,9 +3,17 @@ package cat.udl.eps.softarch.webglossary.servlets;
 import cat.udl.eps.softarch.webglossary.model.Alert;
 import cat.udl.eps.softarch.webglossary.model.GlossaryEntry;
 import cat.udl.eps.softarch.webglossary.model.Itinerary;
+import cat.udl.eps.softarch.webglossary.model.User;
 import cat.udl.eps.softarch.webglossary.persistence.EMF;
 import cat.udl.eps.softarch.webglossary.utils.XQueryHelper;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
@@ -15,7 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.xquery.XQException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 /**
  * Created by carlos on 5/18/14.
@@ -79,10 +89,38 @@ public class GetAlertsServlet extends HttpServlet {
 
     private void sendAdvice(Alert alert){
         ArrayList<Itinerary> allItineraries = Itinerary.getAllItineraries();
-        for(Itinerary i: allItineraries){
-            if(i.getRoad()==alert.getRoad()){
-                sendMail
+        for(Itinerary iti: allItineraries){
+            if(iti.getRoad()==alert.getRoad()){
+                sendMail(iti.getOwner(), alert);
             }
+        }
+    }
+
+    private void sendMail(String email, Alert alert){
+        Properties props = new Properties();
+        Session session = Session.getDefaultInstance(props, null);
+
+        String msgBody = " Hello "+ email +" \n " +
+                "The alert on the road:  "+alert.getRoad()+" has been activated" +
+                "the cause its:"+ alert.getDescription()+ " starting at" +alert.getStart()+" and" +
+                "finishing at: " +alert.getEnd();
+
+
+        try {
+            Message msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress("admin@example.com", "Example.com Admin"));
+            msg.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(email, "Hi " + email + " !"));
+            msg.setSubject("One of your alerts has been activated!");
+            msg.setText(msgBody);
+            Transport.send(msg);
+
+        } catch (AddressException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
 

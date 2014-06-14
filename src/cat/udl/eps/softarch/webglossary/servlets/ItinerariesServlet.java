@@ -21,12 +21,36 @@ public class ItinerariesServlet extends HttpServlet {
         User currentUser = userService.getCurrentUser();
 
         if (currentUser != null) {
+            String userPath = request.getServletPath();
+            String[] userPathValues = userPath.split("/");
             ArrayList<Itinerary> itineraries = Itinerary.getStoredItinerariesByOwner(currentUser.getEmail());
+            // if itineraries page is requested
+            //if (userPathValues[0].equals("/itineraries")) {
+            if (userPath.equals("/itineraries")) {
+                if(!itineraries.isEmpty())
+                    request.setAttribute("itineraries", itineraries);
 
-            if(!itineraries.isEmpty())
-                request.setAttribute("itineraries", itineraries);
+                request.getRequestDispatcher("itinerary.jsp").forward(request, response);
 
-            request.getRequestDispatcher("itinerary.jsp").forward(request, response);
+                // if cart page is requested
+            } else if (userPathValues[0].equals("itineraries") &&
+                    userPathValues[2].equals("change")) {
+
+                response.sendRedirect("/");
+
+            } //else if (userPathValues[0].equals("itineraries") &&
+              //      userPathValues[2].equals("delete")) {
+            else if (userPath.equals("/itineraries/5295247999369216/delete")) {
+                Itinerary clicked = null;
+                for(Itinerary it: itineraries){
+                    if(it.getKey().getId()==Float.valueOf(userPathValues[1])){
+                        clicked = it;
+                    }
+                }
+                Itinerary.removeItinerary(clicked);
+                response.sendRedirect("/itineraries");
+            }
+
         } else {
             response.sendRedirect(userService.createLoginURL(request.getRequestURI()));
         }

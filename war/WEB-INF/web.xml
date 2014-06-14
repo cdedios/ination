@@ -48,6 +48,14 @@
         <servlet-name>Itineraries</servlet-name>
         <url-pattern>/itineraries</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Itineraries</servlet-name>
+        <url-pattern>/itineraries/*/change</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Itineraries</servlet-name>
+        <url-pattern>/itineraries/*/delete</url-pattern>
+    </servlet-mapping>
     <!-- <servlet-mapping>
          <servlet-name>AddEntry</servlet-name>
          <url-pattern>/add</url-pattern>
