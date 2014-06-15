@@ -33,7 +33,8 @@ public class ItinerariesServlet extends HttpServlet {
                 request.getRequestDispatcher("itinerary.jsp").forward(request, response);
 
                 // if cart page is requested
-            } else if (userPathValues[0].equals("itineraries") &&
+            } 
+            /*else if (userPathValues[0].equals("itineraries") &&
                     userPathValues[2].equals("change")) {
 
                 response.sendRedirect("/");
@@ -50,7 +51,7 @@ public class ItinerariesServlet extends HttpServlet {
                 Itinerary.removeItinerary(clicked);
                 response.sendRedirect("/itineraries");
             }
-
+            */
         } else {
             response.sendRedirect(userService.createLoginURL(request.getRequestURI()));
         }
@@ -64,8 +65,23 @@ public class ItinerariesServlet extends HttpServlet {
             double start =  Double.parseDouble(request.getParameter("start"));
             double end =  Double.parseDouble(request.getParameter("end"));
             boolean enabled = Boolean.parseBoolean(request.getParameter("enabled"));
+            boolean doChange = Boolean.parseBoolean(request.getParameter("doChange"));
+            float idIt = Float.parseFloat(request.getParameter("id"));
+            
+            if(doChange!= null){
+                Itinerary clicked = null;
+                for(Itinerary it: itineraries){
+                    if(it.getKey().getId()==idIt){
+                        clicked = it;
+                    }
+                }
+                Itinerary.removeItinerary(clicked);
 
-            Itinerary.addItinerary(new Itinerary(currentUser.getEmail(),road,start,end,enabled));
+            }else {
+                Itinerary.addItinerary(new Itinerary(currentUser.getEmail(),road,start,end,enabled))
+            }
+
+            ;
 
             response.sendRedirect("/itineraries");
             /*response.setContentType("text/plain");
