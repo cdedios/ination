@@ -47,14 +47,7 @@
     <servlet-mapping>
         <servlet-name>Itineraries</servlet-name>
         <url-pattern>/itineraries</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Itineraries</servlet-name>
-        <url-pattern>/itineraries/*/change</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Itineraries</servlet-name>
-        <url-pattern>/itineraries/*/delete</url-pattern>
+        <url-pattern>/itineraries?*</url-pattern>
     </servlet-mapping>
     <!-- <servlet-mapping>
          <servlet-name>AddEntry</servlet-name>
