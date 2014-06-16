@@ -61,14 +61,27 @@ public class ItinerariesServlet extends HttpServlet {
         UserService userService = UserServiceFactory.getUserService();
         User currentUser = userService.getCurrentUser();
         if (currentUser != null) {
+            ArrayList<Itinerary> itineraries = Itinerary.getStoredItinerariesByOwner(currentUser.getEmail());
             String road = request.getParameter("road");
             double start =  Double.parseDouble(request.getParameter("start"));
             double end =  Double.parseDouble(request.getParameter("end"));
             boolean enabled = Boolean.parseBoolean(request.getParameter("enabled"));
+
+            boolean doDelete = Boolean.parseBoolean(request.getParameter("delete"));
+
             boolean doChange = Boolean.parseBoolean(request.getParameter("doChange"));
             float idIt = Float.parseFloat(request.getParameter("id"));
             
-            if(doChange!= null){
+            if(request.getParameter("enabled")!= null){
+                Itinerary clicked = null;
+                for(Itinerary it: itineraries){
+                    if(it.getKey().getId()==idIt){
+                        clicked = it;
+                    }
+                }
+                Itinerary.changeEnabled(clicked);
+
+            }else if(request.getParameter("delete")!= null){
                 Itinerary clicked = null;
                 for(Itinerary it: itineraries){
                     if(it.getKey().getId()==idIt){
@@ -78,10 +91,8 @@ public class ItinerariesServlet extends HttpServlet {
                 Itinerary.removeItinerary(clicked);
 
             }else {
-                Itinerary.addItinerary(new Itinerary(currentUser.getEmail(),road,start,end,enabled))
+                Itinerary.addItinerary(new Itinerary(currentUser.getEmail(),road,start,end,enabled));
             }
-
-            ;
 
             response.sendRedirect("/itineraries");
             /*response.setContentType("text/plain");

@@ -61,8 +61,20 @@
                     <TD> <%= it.getStart() %> </TD>
                     <TD> <%= it.getEnd() %> </TD>
                     <TD> <%= it.isEnabled() %> </TD>
-                    <TD><a href=<%=url1%>><%=button%></a> </TD>
                     <TD><a href=<%=url2%>>Delete</a> </TD>
+                    <TD> <form action="/itineraries" method="post">
+                        <div>
+                            <input type="text" name="delete" value="true"/>
+                            <input type="submit" value="Delete"/>
+                        </div>
+                    </form></TD>
+                     <TD> <form action="/itineraries" method="post">
+                        <div>
+                            <input type="text" name="enable" value="true"/>
+                            <input type="submit" value=""<%=button%>"/>
+                        </div>
+                    </form></TD>
+
                 </TR>
         <%}
     }%>
