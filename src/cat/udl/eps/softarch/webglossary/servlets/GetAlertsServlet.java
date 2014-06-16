@@ -78,8 +78,6 @@ public class GetAlertsServlet extends HttpServlet {
         return finalAlerts;
     }
 
-
-
     private ArrayList<Alert> allOld(ArrayList<Alert> alerts){
         for (Alert alert: alerts){
             alert.notNew();
@@ -91,7 +89,19 @@ public class GetAlertsServlet extends HttpServlet {
         ArrayList<Itinerary> allItineraries = Itinerary.getAllItineraries();
         for(Itinerary iti: allItineraries){
             if(iti.getRoad()==alert.getRoad()){
-                sendMail(iti.getOwner(), alert);
+                boolean enabled = iti.isEnabled();
+                double itiStart = iti.getStart();
+                double itiEnd = iti.getEnd();
+                double alertStart = alert.getStart();
+                double alertEnd = alert.getEnd();
+                boolean itiIsIncreasing = (itiEnd > itiStart) ? true : false;
+                boolean alertIsIncreasing = (alertEnd > alertStart) ? true : false;
+                if(enabled && itiIsIncreasing == alertIsIncreasing && ((alertStart <= itiStart &&
+                   alertStart<= itiEnd) || (alertStart <= itiEnd && itiStart<= itiEnd) ||
+                   (alertStart >= itiStart && alertEnd >= itiStart) ||
+                   (alertStart >= itiEnd && alertEnd >= itiEnd))){
+                        sendMail(iti.getOwner(), alert);
+                }
             }
         }
     }
