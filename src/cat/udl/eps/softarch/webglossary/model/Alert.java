@@ -196,8 +196,7 @@ public class Alert{
     }
 
     @Override
-    public boolean equals(Object other)
-    {
+    public boolean equals(Object other){
         System.out.print("He entrat al equals canelo");
         if (other == null) return false;
         if (other == this) return true;

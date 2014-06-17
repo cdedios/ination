@@ -22,7 +22,10 @@
     <div>Start: <input type="text" name="start" value=""/></div>
     <div>End: <input type="text" name="end" value=""/></div>
     <div>Enabled: <input type="checkbox" name="enabled" value="true"/></div>
-    <div><input type="submit" value="Add"/></div>
+    <div>
+        <input type="hidden" name="action" value="add">
+        <input type="submit" value="Add"/>
+    </div>
 </form>
 
 <br>
@@ -61,15 +64,17 @@
                     <TD> <%= it.getStart() %> </TD>
                     <TD> <%= it.getEnd() %> </TD>
                     <TD> <%= it.isEnabled() %> </TD>
-                    <TD> <form action="/itineraries" method="delete">
+                    <TD> <form action="/itineraries" method="post">
                         <div>
-                            <input type="hidden" name="id" value="<%=it.getKey().getId()%>"/>
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="idIt" value="<%=it.getKey().getId()%>"/>
                             <input type="submit" value="Delete"/>
                         </div>
                     </form></TD>
-                     <TD> <form action="/itineraries" method="update">
+                     <TD> <form action="/itineraries" method="post">
                         <div>
-                            <input type="hidden" name="id" value="<%=it.getKey().getId()%>"/>
+                            <input type="hidden" name="action" value="update">
+                            <input type="hidden" name="idIt" value="<%=it.getKey().getId()%>"/>
                             <input type="submit" value="<%=button%>"/>
                         </div>
                     </form></TD>

@@ -166,4 +166,13 @@ public class Itinerary {
             if (txn.isActive()) txn.rollback();
             em.close(); }
     }
+    @Override
+    public boolean equals(Object other)
+    {
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof Itinerary))return false;
+        Itinerary otherMyClass = (Itinerary) other;
+        return otherMyClass.getKey().getId() == this.key.getId();
+    }
 }
