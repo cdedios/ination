@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.xquery.XQException;
+import java.awt.geom.Line2D;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -88,7 +89,9 @@ public class GetAlertsServlet extends HttpServlet {
     private void sendAdvice(Alert alert){
         ArrayList<Itinerary> allItineraries = Itinerary.getAllItineraries();
         for(Itinerary iti: allItineraries){
-            if(iti.getRoad()==alert.getRoad()){
+            if(iti.getRoad().compareTo(alert.getRoad()) == 0){
+                System.out.println("Dos ccarreteres iguals");
+                sendMail(iti.getOwner(), alert);
                 boolean enabled = iti.isEnabled();
                 double itiStart = iti.getStart();
                 double itiEnd = iti.getEnd();
@@ -96,17 +99,27 @@ public class GetAlertsServlet extends HttpServlet {
                 double alertEnd = alert.getEnd();
                 boolean itiIsIncreasing = (itiEnd > itiStart) ? true : false;
                 boolean alertIsIncreasing = (alertEnd > alertStart) ? true : false;
-                if(enabled && itiIsIncreasing == alertIsIncreasing && ((alertStart <= itiStart &&
-                   alertStart<= itiEnd) || (alertStart <= itiEnd && itiStart<= itiEnd) ||
-                   (alertStart >= itiStart && alertEnd >= itiStart) ||
-                   (alertStart >= itiEnd && alertEnd >= itiEnd))){
+                boolean intersect = true;
+                if(enabled && itiIsIncreasing == alertIsIncreasing && intersect){
                         sendMail(iti.getOwner(), alert);
                 }
             }
         }
     }
 
+    private boolean intersect(double A1, double A2, double B1, double B2){
+        /*double det = A1*B2 - A2*B1;
+        if(det == 0){
+            //Lines are parallel
+        }else{
+            double x = (B2*C1 - B1*C2)/det
+            double y = (A1*C2 - A2*C1)/det
+        }*/
+        return true;
+    }
+
     private void sendMail(String email, Alert alert){
+        System.out.println("He entrat a sendEmail");
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
 
@@ -118,18 +131,21 @@ public class GetAlertsServlet extends HttpServlet {
 
         try {
             Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress("admin@example.com", "Example.com Admin"));
+            msg.setFrom(new InternetAddress("cdedios92@gmail.com", "Example.com Admin"));
             msg.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(email, "Hi " + email + " !"));
             msg.setSubject("One of your alerts has been activated!");
             msg.setText(msgBody);
             Transport.send(msg);
-
+            System.out.println("He enviat a sendEmail");
         } catch (AddressException e) {
+            System.out.println("Error 1");
             e.printStackTrace();
         } catch (MessagingException e) {
+            System.out.println("Error 2");
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
+            System.out.println("Error 3");
             e.printStackTrace();
         }
     }
