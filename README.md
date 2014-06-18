@@ -39,7 +39,7 @@ Finally, for a sample Google App Engine + JPA project showing how to create pers
 
 Deliverable
 
-This project intermediate deliverable should feature, at least, the monitor component and be capable of persisting new incidents. It is recommended that it provides a web service (for instance servlet at "/process") responsible for performing the scheduled task (called by cron), which also provides as HTML output a list of all the processed incidents (highlighting which ones are new and have been persisted and the discarded ones because they are already stored). Additionally, it should also provide a different service (servlet at "/list") that lists all the incidents currently stored.
+This is the final project deliverable and should feature the implementation of all the functionality specified.
 
 The delivery will be performed through the private GitHub repository for each project team. The last commit before the deadline will be considered for evaluation purposes. The repository should feature also a README file providing at least:
 
@@ -47,5 +47,3 @@ The names of the team members.
 The URL of the GitHub repository.
 The URL where the application is deployed in Google App Engine.
 Therefore, in addition to the source code in GitHub, the project should be also running in Google App Engine.
-
-Finally, the same README file should be also delivered using Campus Virtual by one of the team members.
