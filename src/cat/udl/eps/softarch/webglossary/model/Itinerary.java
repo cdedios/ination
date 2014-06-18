@@ -139,6 +139,8 @@ public class Itinerary {
     public static void removeItinerary(Itinerary itinerary) {
         EntityManager em = EMF.get().createEntityManager();
         EntityTransaction txn = em.getTransaction();
+        System.out.println(itinerary.getOwner());
+        System.out.println(itinerary.getRoad());
         try {
             txn.begin();
             em.remove(itinerary);
