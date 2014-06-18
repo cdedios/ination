@@ -7,6 +7,7 @@ import cat.udl.eps.softarch.webglossary.model.User;
 import cat.udl.eps.softarch.webglossary.persistence.EMF;
 import cat.udl.eps.softarch.webglossary.utils.XQueryHelper;
 
+import java.awt.Point;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -22,7 +23,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.xquery.XQException;
-import java.awt.geom.Line2D;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -91,7 +91,7 @@ public class GetAlertsServlet extends HttpServlet {
         for(Itinerary iti: allItineraries){
             if(iti.getRoad().compareTo(alert.getRoad()) == 0){
                 System.out.println("Dos ccarreteres iguals");
-                sendMail(iti.getOwner(), alert);
+
                 boolean enabled = iti.isEnabled();
                 double itiStart = iti.getStart();
                 double itiEnd = iti.getEnd();
@@ -99,7 +99,7 @@ public class GetAlertsServlet extends HttpServlet {
                 double alertEnd = alert.getEnd();
                 boolean itiIsIncreasing = (itiEnd > itiStart) ? true : false;
                 boolean alertIsIncreasing = (alertEnd > alertStart) ? true : false;
-                boolean intersect = true;
+                boolean intersect = intersect(itiStart, itiEnd, alertStart, alertEnd);
                 if(enabled && itiIsIncreasing == alertIsIncreasing && intersect){
                         sendMail(iti.getOwner(), alert);
                 }
@@ -107,15 +107,14 @@ public class GetAlertsServlet extends HttpServlet {
         }
     }
 
-    private boolean intersect(double A1, double A2, double B1, double B2){
-        /*double det = A1*B2 - A2*B1;
-        if(det == 0){
-            //Lines are parallel
+    private boolean intersect(double x1, double x2, double x3, double x4){
+        double overlap = Math.max(0, Math.min(x1, x3) - Math.max(x3, x4));
+        System.out.println(overlap);
+        if(overlap != 0){
+            return true;
         }else{
-            double x = (B2*C1 - B1*C2)/det
-            double y = (A1*C2 - A2*C1)/det
-        }*/
-        return true;
+            return false;
+        }
     }
 
     private void sendMail(String email, Alert alert){
