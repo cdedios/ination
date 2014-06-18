@@ -2,7 +2,13 @@ package cat.udl.eps.softarch.webglossary.model;
 
 import cat.udl.eps.softarch.webglossary.persistence.EMF;
 import com.google.appengine.api.datastore.Key;
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
+import javax.jdo.PersistenceManager;
+import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.*;
 import java.util.ArrayList;
 
@@ -16,7 +22,7 @@ public class Itinerary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Key key;
 
-    //private long id;
+    private double id;
     private String owner;
     private String road;
     private double start;
@@ -26,7 +32,7 @@ public class Itinerary {
     protected Itinerary() {}
 
     public Itinerary( String owner, String road, double start, double end, boolean enabled) {
-        //this.id = key.getId();
+        this.id = Math.random();
         this.owner = owner;
         this.road = road;
         this.start = start;
@@ -40,7 +46,7 @@ public class Itinerary {
 
     public Key getKey(){return key;}
 
-    //public long getId(){ return this.id; }
+    public double getId(){ return this.id; }
 
     public void setOwner(String owner) {
         this.owner = owner;
@@ -137,7 +143,8 @@ public class Itinerary {
     }
 
     public static void removeItinerary(Itinerary itinerary) {
-        EntityManager em = EMF.get().createEntityManager();
+        System.out.println("Intentant remove itinerary 1");
+        /*EntityManager em = EMF.get().createEntityManager();
         EntityTransaction txn = em.getTransaction();
         System.out.println(itinerary.getOwner());
         System.out.println(itinerary.getRoad());
@@ -150,11 +157,20 @@ public class Itinerary {
         }
         finally {
             if (txn.isActive()) txn.rollback();
-            em.close(); }
+            em.close(); }*/
+        EntityManager em = EMF.get().createEntityManager();
+        try {
+            //Query q = em.createQuery("SELECT t FROM Itinerary t");
+            Query q = em.createQuery("DELETE FROM Itinerary WHERE id = "+itinerary.getId());
+            q.executeUpdate();
+
+        } finally {
+            em.close();
+        }
     }
 
     public static void changeEnabled(Itinerary itinerary){
-        EntityManager em = EMF.get().createEntityManager();
+        /*EntityManager em = EMF.get().createEntityManager();
         EntityTransaction txn = em.getTransaction();
         try {
             txn.begin();
@@ -166,15 +182,30 @@ public class Itinerary {
         }
         finally {
             if (txn.isActive()) txn.rollback();
-            em.close(); }
+            //System.out.println("Update fine");
+            em.close(); }*/
+
+        /*EntityManager em = EMF.get().createEntityManager();
+        try {
+            Query q = em.createQuery("UPDATE Itinerary SET enabled="+!itinerary.isEnabled()+" WHERE id = "+itinerary.getId());
+            q.executeUpdate();
+
+        } finally {
+            em.close();
+        }*/
+        removeItinerary(itinerary);
+        itinerary.setEnabled(!itinerary.isEnabled());
+        addItinerary(itinerary);
+
     }
     @Override
     public boolean equals(Object other)
     {
+        System.out.println("He entrat al equals de Itinerary");
         if (other == null) return false;
         if (other == this) return true;
         if (!(other instanceof Itinerary))return false;
         Itinerary otherMyClass = (Itinerary) other;
-        return otherMyClass.getKey().getId() == this.key.getId();
+        return otherMyClass.getId() == this.getId();
     }
 }

@@ -1,9 +1,7 @@
 package cat.udl.eps.softarch.webglossary.servlets;
 
 import cat.udl.eps.softarch.webglossary.model.Alert;
-import cat.udl.eps.softarch.webglossary.model.GlossaryEntry;
 import cat.udl.eps.softarch.webglossary.model.Itinerary;
-import cat.udl.eps.softarch.webglossary.model.User;
 import cat.udl.eps.softarch.webglossary.persistence.EMF;
 import cat.udl.eps.softarch.webglossary.utils.XQueryHelper;
 
