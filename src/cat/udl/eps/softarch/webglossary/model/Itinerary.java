@@ -175,7 +175,8 @@ public class Itinerary {
         try {
             txn.begin();
             itinerary.setEnabled(!itinerary.isEnabled());
-            em.refresh(itinerary);
+            //em.refresh(itinerary);
+            -->em.persist(itinerary);
             txn.commit(); }
         catch (Exception e) {
             //log.warning(e.getMessage());
